@@ -1,0 +1,1 @@
+poetry run python -m resume_assistant.frontend.src.index

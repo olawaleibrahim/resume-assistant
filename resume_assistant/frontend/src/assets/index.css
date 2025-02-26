@@ -1,0 +1,26 @@
+.card {
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+    padding: 0%;
+    height: 90vh;
+}
+
+.content {
+    margin: 1%;
+    background-color: #ffffff;
+    border-radius: 1%;
+    color: #07141F;
+    overflow-y: auto;
+}
+
+.heading {
+    text-align: left;
+}
+
+.main-card {
+    background-color: #07141F;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    padding: 1%;
+    height: 85vh;
+}

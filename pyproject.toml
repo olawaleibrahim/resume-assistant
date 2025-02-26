@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "resume-assistant"
+version = "0.1.0"
+description = ""
+authors = ["Olawale Ibrahim <ibrahim.olawale13@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+dash = "^2.18.2"
+dash-bootstrap-components = "1.7.1"
+dash-core-components = "^2.0.0"
+dash-html-components = "^2.0.0"
+langchain-core = "^0.3.35"
+langchain-cli = "^0.0.35"
+google-genai = "^1.2.0"
+notebook = "^7.3.2"
+langchain-google-community = { extras = ["docai"], version = "^2.0.4" }
+langchain-google-cloud-sql-pg = "^0.12.1"
+pypdf = "^5.3.0"
+google-api-python-client = "^2.161.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
+google-cloud-vision = "^3.10.0"
+poethepoet = "0.29.0"
+kfp = "^2.11.0"
+loguru = "^0.7.3"
+fast-dash = "^0.2.10"
+waitress = "^3.0.2"
+click = "^8.1.8"
+llama-cloud-services = "^0.6.2"
+langchain-google-vertexai = "^2.0.14"
+langchain = "^0.3.19"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+
+# pipelines
+
+run-get-job-description = "poetry run python -m tools.run --run-get-job-description --no-cache --url https://job-boards.greenhouse.io/scaleai/jobs/4413274005"
+run-extract-resume-content = "poetry run python -m tools.run --run-extract-resume-content --no-cache --user-resume-path Olawale_Machine_Learning_Engineer_Template.pdf"
+run-frontend = "poetry run python -m resume_assistant.frontend.src.index"
+
+
+# steps
+
+# run-upload_to-gcs = "poetry run python -m tools.run --run-upload-to-gcs --no-cache --bucket-name langchain-book-bucket --file-path Olawale_Machine_Learning_Engineer_Template.pdf"
+
+# infrastructure
+
+set-local-stack = "poetry run zenml stack set default"
+set-aws-stack = "poetry run zenml stack set aws-stack"
+set-asynchronous-runs = "poetry run zenml orchestrator update aws-stack --synchronous=False"
+zenml-server-disconnect = "poetry run zenml disconnect"
+# Data pipelines
