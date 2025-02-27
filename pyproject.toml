@@ -45,10 +45,10 @@ run-get-job-description = "poetry run python -m tools.run --run-get-job-descript
 run-extract-resume-content = "poetry run python -m tools.run --run-extract-resume-content --no-cache --user-resume-path Olawale_Machine_Learning_Engineer_Template.pdf"
 run-frontend = "poetry run python -m resume_assistant.frontend.src.index"
 
+# deploy
+run-configure-registry = "gcloud auth configure-docker us-central1-docker.pkg.dev" # adjust to use your specific location
+run-build = "gcloud builds submit --tag us-central1-docker.pkg.dev/gcp-langchain-450916/llms-registry/resume-assistant" # https://cloud.google.com/build/docs/building/build-containerize-python
 
-# steps
-
-# run-upload_to-gcs = "poetry run python -m tools.run --run-upload-to-gcs --no-cache --bucket-name langchain-book-bucket --file-path Olawale_Machine_Learning_Engineer_Template.pdf"
 
 # infrastructure
 
@@ -56,4 +56,3 @@ set-local-stack = "poetry run zenml stack set default"
 set-aws-stack = "poetry run zenml stack set aws-stack"
 set-asynchronous-runs = "poetry run zenml orchestrator update aws-stack --synchronous=False"
 zenml-server-disconnect = "poetry run zenml disconnect"
-# Data pipelines
