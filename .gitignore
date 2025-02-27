@@ -2,7 +2,6 @@ data/
 */data/
 analytics-ai/mlruns/
 0/
-*templates.py
 *.pdf
 *.docx
 *.txt
