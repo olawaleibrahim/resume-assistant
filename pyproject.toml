@@ -48,6 +48,7 @@ run-frontend = "poetry run python -m resume_assistant.frontend.src.index"
 # deploy
 run-configure-registry = "gcloud auth configure-docker us-central1-docker.pkg.dev" # adjust to use your specific location
 run-build = "gcloud builds submit --tag us-central1-docker.pkg.dev/gcp-langchain-450916/llms-registry/resume-assistant" # https://cloud.google.com/build/docs/building/build-containerize-python
+run-test-built-image = "docker run us-central1-docker.pkg.dev/gcp-langchain-450916/llms-registry/resume-assistant"
 
 
 # infrastructure

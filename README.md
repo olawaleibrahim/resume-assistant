@@ -1,6 +1,6 @@
 # Resume Assistant
 
-This is a sample project on building an LLM poc application using the langchain and google SDK.
+This is a sample project on building an LLM poc application using langchain and google SDK.
 
 ### Installation
 
@@ -78,7 +78,7 @@ poetry poe run-frontend
 Configure Docker to use your Artifact Registry credentials when interacting with Artifact Registry. (You are only required to do this once.)
 
 ```bashrc
-poetry poe run un-configure-registry
+poetry poe run configure-registry
 ```
 
 #### Build docker image

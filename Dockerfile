@@ -25,7 +25,7 @@ RUN poetry config installer.max-workers 20
 WORKDIR $WORKSPACE_ROOT
 
 # Copy the poetry lock file and pyproject.toml file to install dependencies
-COPY pyproject.toml requirements.txt $WORKSPACE_ROOT
+COPY pyproject.toml $WORKSPACE_ROOT
 
 
 # RUN poetry run pip install -r requirements.txt

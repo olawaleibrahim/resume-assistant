@@ -49,12 +49,11 @@ main_content = dbc.Card(
                                             }),
                                         ], style={"height": "20%", "width": "100%"}),
                                         dbc.Row([
-                                            html.H5("Job Description"),
+                                            html.H5("Job Description",
+                                                    className="default-font"),
                                             html.Div(
                                                 [], id="extracted-job-description"),
-                                        ], className="content", style={"height": "55vh"}),
-                                        html.Button(
-                                            "Assist", id="assist-button", style={"width": "30%"}),
+                                        ], className="content", style={"height": "60vh"}),
                                     ]),
                                 ], className="main-card"),
                             ], width=3, className=""),
@@ -64,27 +63,32 @@ main_content = dbc.Card(
                                         html.H3("ATS ASSISTANT"),
                                         dbc.Row([
                                             dbc.Col([
-                                                html.H6("Summary"),
+                                                html.H6(
+                                                    "Summary", className="default-font"),
                                                 html.Div(
-                                                    [""""""], id="summary"),
+                                                    [], id="summary"),
                                             ], className="content", style={"height": "95%"}, width=3),
                                             dbc.Col([
-                                                html.H6("Experience"),
+                                                html.H6(
+                                                    "Experience", className="default-font"),
                                                 html.Div([], id="experience"),
                                             ], className="content", style={"height": "95%"}, width=8),
                                         ], style={"height": "60vh"}),
                                         dbc.Row([
                                             dbc.Col([
-                                                html.H6("Skills"),
+                                                html.H6(
+                                                    "Skills", className="default-font"),
                                                 html.Div([], id="skills"),
                                             ], className="content", style={"height": "60%"}, width=3),
                                             dbc.Col([
-                                                html.H6("Missing Keywords"),
+                                                html.H6(
+                                                    "Missing Keywords", className="default-font"),
                                                 html.Div(
                                                     [], id="missing-keywords"),
                                             ], className="content", style={"height": "60%"}, width=4),
                                             dbc.Col([
-                                                html.H6("Changes Made"),
+                                                html.H6(
+                                                    "Changes Made", className="default-font"),
                                                 html.Div(
                                                     [], id="changes-made"),
                                             ], className="content", style={"height": "60%"}, width=4),
