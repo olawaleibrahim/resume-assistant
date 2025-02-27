@@ -34,6 +34,25 @@ app_states = html.Div([
     dcc.Store(id='node-questions', data=[]),
 ])
 
+success_notification = dbc.Toast(
+    id="success-notification",
+    header="Success",
+    is_open=False,
+    dismissable=True,
+    icon="success",
+    style={"position": "fixed", "top": 90, "right": 10,
+           "width": 350, "text-color": "black"},
+)
+
+failure_notification = dbc.Toast(
+    id="failure-notification",
+    header="Failed",
+    is_open=False,
+    dismissable=True,
+    icon="danger",
+    style={"position": "fixed", "top": 90, "right": 10,
+           "width": 350, "text-color": "black"},
+)
 
 app.layout = dbc.Row([
     app_states,
@@ -43,6 +62,8 @@ app.layout = dbc.Row([
 
         ])
     ], width=12, id='page-content'),
+    success_notification,
+    failure_notification
 ])
 
 page_2_layout = html.Div([
@@ -58,48 +79,50 @@ page_2_layout = html.Div([
 
 @app.callback(
     Output("extracted-job-description", "children"),
-    Input("job-url", "value")
-)
-def update_job_description(url):
-
-    if url:
-        webpage_content = scrape_webpage_content(url)
-        job_description = extract_job_description(webpage_content)
-        return job_description
-    else:
-        return no_update
-
-
-@app.callback(
     Output('summary', 'children'),
     Output('experience', 'children'),
     Output('skills', 'children'),
     Output('missing-keywords', 'children'),
     Output('changes-made', 'children'),
+    Output('success-notification', 'is_open'),
+    Output('success-notification', 'children'),
+    Output('failure-notification', 'is_open'),
+    Output('failure-notification', 'children'),
+    Input("job-url", "value"),
     Input('upload-file', 'contents'),
-    Input('extracted-job-description', 'value'),
+    Input('extracted-job-description', 'children'),
     State('upload-file', 'filename'),
 )
-def triggerATSApi(file_content, job_description, filename):
+def triggerATSApi(url, file_content, job_description, filename):
 
     ctx = dash.callback_context
-    if filename and "upload-file" in ctx.triggered[0]["prop_id"]:
-        public_url = upload_to_gcs(filename, file_content)
-        documents = get_langchain_docs(filename)
-        content = extract_content_from_documents(documents)
-        chat_model = get_model()
-        ats_chain = templates.ATS_TEMPLATE | chat_model
-        ats_result = ats_chain.invoke({"job_description": job_description,
-                                       "resume_content": content})
+    if filename and "upload-file" in ctx.triggered[0]["prop_id"] and url:
+        try:
+            public_url = upload_to_gcs(filename, file_content)
+            documents = get_langchain_docs(filename)
+            content = extract_content_from_documents(documents)
+            chat_model = get_model()
+            ats_chain = templates.ATS_TEMPLATE | chat_model
+            ats_result = ats_chain.invoke({"job_description": job_description,
+                                           "resume_content": content})
 
-        json_ats_result = postprocess.get_json_from_result(ats_result)
-        summary = json_ats_result["Summary"]
-        experience = json_ats_result["Experience"]
-        skills = json_ats_result["Skills"]
-        missing_kws = json_ats_result["Missing Keywords"]
-        changes_made = json_ats_result["Changes Made"]
+            json_ats_result = postprocess.get_json_from_result(ats_result)
+            summary = json_ats_result["Summary"]
+            experience = json_ats_result["Experience"]
+            skills = json_ats_result["Skills"]
+            missing_kws = json_ats_result["Missing Keywords"]
+            changes_made = json_ats_result["Changes Made"]
 
-        return summary, experience, skills, missing_kws, changes_made
+            return job_description, summary, experience, skills, missing_kws, changes_made, True, "ATS Review Completed", False, ""
+        except Exception as e:
+            return job_description, "", "", "", "", "", False, "", True, str(e)
+    elif url:
+        try:
+            webpage_content = scrape_webpage_content(url)
+            job_description = extract_job_description(webpage_content)
+            return job_description, "", "", "", "", "", True, "Extracted job description", False, ""
+        except Exception as e:
+            return job_description, "", "", "", "", "", False, "", True, str(e)
     else:
         return no_update
 
@@ -115,7 +138,7 @@ def display_page(pathname):
         return index_page
 
 
-PORT = str(8080)
+PORT = str(8082)
 
 if __name__ == '__main__':
     print("start")

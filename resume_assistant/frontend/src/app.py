@@ -35,7 +35,7 @@ main_content = dbc.Card(
                                             ),
                                             dbc.Row(),
                                             dcc.Upload([
-                                                'Drag and Drop or ',
+                                                'Click or Drag and Drop to ',
                                                 html.A('Upload your resume')
                                             ], id="upload-file",
                                                 style={
@@ -45,7 +45,8 @@ main_content = dbc.Card(
                                                 'borderWidth': '100%',
                                                 'borderStyle': 'dashed',
                                                 'borderRadius': '1%',
-                                                'textAlign': 'center'
+                                                'textAlign': 'center',
+                                                'color': '#ffffff',
                                             }),
                                         ], style={"height": "20%", "width": "100%"}),
                                         dbc.Row([
