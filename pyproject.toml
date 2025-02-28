@@ -43,7 +43,7 @@ build-backend = "poetry.core.masonry.api"
 
 run-get-job-description = "poetry run python -m tools.run --run-get-job-description --no-cache --url https://job-boards.greenhouse.io/scaleai/jobs/4413274005"
 run-extract-resume-content = "poetry run python -m tools.run --run-extract-resume-content --no-cache --user-resume-path Olawale_Machine_Learning_Engineer_Template.pdf"
-run-frontend = "poetry run python -m resume_assistant.frontend.src.index"
+run-frontend = "poetry run python -m resume_assistant.frontend.src.index --port 8066"
 
 # deploy
 run-configure-registry = "gcloud auth configure-docker us-central1-docker.pkg.dev" # adjust to use your specific location

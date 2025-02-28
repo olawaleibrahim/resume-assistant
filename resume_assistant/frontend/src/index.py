@@ -1,22 +1,23 @@
-import glob as glob
-import dash
-import dash_bootstrap_components as dbc
-from dash import callback, no_update, dcc, html, Input, Output, State
-import flask
-from waitress import serve
-
+from . import app as home_app
+from resume_assistant.models.model import get_model
+from resume_assistant.application.rag.utils import extract_content_from_documents
+import resume_assistant.application.rag.templates as templates
+from resume_assistant.application.rag.retriever import get_langchain_docs
+import resume_assistant.application.processing.postprocess as postprocess
+from resume_assistant.application.dataset.upload import upload_to_gcs
 from resume_assistant.application.dataset.extraction import (extract_job_description,
                                                              scrape_webpage_content)
-from resume_assistant.application.dataset.upload import upload_to_gcs
-import resume_assistant.application.processing.postprocess as postprocess
-from resume_assistant.application.rag.retriever import get_langchain_docs
-import resume_assistant.application.rag.templates as templates
-from resume_assistant.application.rag.utils import extract_content_from_documents
-from resume_assistant.models.model import get_model
-
-from . import app as home_app
-
-
+from waitress import serve
+import flask
+from dash import callback, no_update, dcc, html, Input, Output, State
+import dash_bootstrap_components as dbc
+import dash
+import glob as glob
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--port", type=str, default="8080", help="server port")
+args = parser.parse_args()
+PORT = str(args.port)
 server = flask.Flask(__name__)
 
 app = dash.Dash(
@@ -137,8 +138,6 @@ def display_page(pathname):
     else:
         return index_page
 
-
-PORT = str(8082)
 
 if __name__ == '__main__':
     print("start")
